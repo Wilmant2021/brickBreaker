@@ -31,4 +31,17 @@ public class Sonido {
             clip.start();
         }
     }
+
+    public void reproducirMusica(){
+        if (clip != null) {
+            clip.start();
+        }
+    }
+
+    public void playLoop() {
+        if (clip != null) {
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // Repetir el sonido continuamente
+            clip.start();
+        }
+    }
 }

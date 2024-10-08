@@ -20,6 +20,7 @@ public class ControladorPelota {
     private PanelPelota panelPelota;
     private Timer temporizador;
     private Sonido sonidoRebote;
+    private Sonido sonidoPartida;
     private Juego juego;
     private CardLayout cardLayout;
     private JPanel contenedorPaneles;
@@ -32,13 +33,14 @@ public class ControladorPelota {
         this.juego = juego;
         this.cardLayout = cardLayout;
         this.contenedorPaneles = contenedorPaneles;
-
+        sonidoPartida = new Sonido("resources/sonidos/level1.wav");
         sonidoRebote = new Sonido("resources/sonidos/rebotar.wav");
 
         temporizador = new Timer(16, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pelota.mover();
+                sonidoPartida.reproducirMusica();
                 verificarColision();
                 verificarDerrota();
                 panelPelota.actualizarPanel();
@@ -52,6 +54,7 @@ public class ControladorPelota {
                 pelota.getX() >= barra.getX() &&
                 pelota.getX() <= barra.getX() + barra.getAncho()) {
             pelota.rebotarVerticalmente();
+
             sonidoRebote.reproducir();
         }
 
