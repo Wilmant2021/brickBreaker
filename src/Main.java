@@ -59,7 +59,7 @@ public class Main {
         // Pantalla de derrota
         JPanel pantallaDerrota = new JPanel();
         pantallaDerrota.setLayout(new BorderLayout());
-        JLabel textoDerrota = new JLabel("Has perdido", JLabel.CENTER);
+        JLabel textoDerrota = new JLabel("GAME OVER ", JLabel.CENTER);
         pantallaDerrota.add(textoDerrota, BorderLayout.CENTER);
 
         // Añadir los paneles al contenedor

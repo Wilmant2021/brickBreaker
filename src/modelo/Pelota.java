@@ -72,6 +72,13 @@ public class Pelota {
         this.y = y;
     }
 
+    public void setVelocidadX(int velocidadX) {
+        this.velocidadX = velocidadX;
+    }
+
+    public void setVelocidadY(int velocidadY) {
+        this.velocidadY = velocidadY;
+    }
 
 
 

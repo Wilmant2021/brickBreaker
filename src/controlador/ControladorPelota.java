@@ -49,26 +49,36 @@ public class ControladorPelota {
     }
 
     private void verificarColision() {
-        // Colisión con la barra
+        // Primero, verificar colisión con la barra
         if (pelota.getY() + pelota.getRadio() >= barra.getY() &&
-                pelota.getX() >= barra.getX() &&
-                pelota.getX() <= barra.getX() + barra.getAncho()) {
-            pelota.rebotarVerticalmente();
+                pelota.getX() + pelota.getRadio() >= barra.getX() &&
+                pelota.getX() - pelota.getRadio() <= barra.getX() + barra.getAncho()) {
+
+            // Verifica si la pelota golpea el borde izquierdo o derecho de la barra
+            if (pelota.getX() < barra.getX() || pelota.getX() > barra.getX() + barra.getAncho()) {
+                pelota.rebotarHorizontalmente();
+            } else {
+                pelota.rebotarVerticalmente();
+                // Ajusta la posición de la pelota para evitar que se desplace sobre la barra
+                pelota.setY(barra.getY() - pelota.getRadio()); // Coloca la pelota justo arriba de la barra
+            }
 
             sonidoRebote.reproducir();
         }
 
-        // Colisión con los bloques
+        // Luego, verificar colisión con los bloques
         for (Bloque bloque : bloques) {
             if (colisionaConBloque(bloque)) {
                 bloques.remove(bloque);
-                pelota.rebotarVerticalmente();
-                juego.incrementarPuntuacion(100);  // Aumentar puntuación al romper un bloque
+                pelota.rebotarVerticalmente(); // Asegúrate de que aquí sea verticalmente
+                juego.incrementarPuntuacion(100);
                 sonidoRebote.reproducir();
                 break;
             }
         }
     }
+
+
 
     private void verificarDerrota() {
         if (pelota.getY() + pelota.getRadio() > pelota.getAltoPanel()) {
