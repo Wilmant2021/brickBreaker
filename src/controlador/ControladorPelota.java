@@ -60,7 +60,7 @@ public class ControladorPelota {
             int mitadAncho = barra.getAncho() / 2;
 
             // Ajustar la velocidad en X según la posición de impacto
-            int nuevaVelocidadX = (puntoImpacto - mitadAncho) / 5;
+            int nuevaVelocidadX = (puntoImpacto - mitadAncho) / 10;
             pelota.setVelocidadX(nuevaVelocidadX);
             pelota.rebotarVerticalmente();
             sonidoRebote.reproducir();
