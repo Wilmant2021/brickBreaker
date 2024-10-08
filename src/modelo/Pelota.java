@@ -19,6 +19,26 @@ public class Pelota {
         this.altoPanel = altoPanel;
     }
 
+    public int getVelocidadX() {
+        return velocidadX;
+    }
+
+    public int getVelocidadY() {
+        return velocidadY;
+    }
+
+    public void setAnchoPanel(int anchoPanel) {
+        this.anchoPanel = anchoPanel;
+    }
+
+    public void setRadio(int radio) {
+        this.radio = radio;
+    }
+
+    public void setAltoPanel(int altoPanel) {
+        this.altoPanel = altoPanel;
+    }
+
     public void mover() {
         x += velocidadX;
         y += velocidadY;

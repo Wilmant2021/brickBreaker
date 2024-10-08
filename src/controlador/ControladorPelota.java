@@ -49,18 +49,22 @@ public class ControladorPelota {
     }
 
     private void verificarColision() {
-        // Primero, verificar colisión con la barra
         if (pelota.getY() + pelota.getRadio() >= barra.getY() &&
+                pelota.getY() - pelota.getRadio() <= barra.getY() + barra.getAlto() &&
                 pelota.getX() + pelota.getRadio() >= barra.getX() &&
                 pelota.getX() - pelota.getRadio() <= barra.getX() + barra.getAncho()) {
 
-            // Verifica si la pelota golpea el borde izquierdo o derecho de la barra
-            if (pelota.getX() < barra.getX() || pelota.getX() > barra.getX() + barra.getAncho()) {
+
+            if (pelota.getX() < barra.getX()) {
+                pelota.setX(barra.getX() - pelota.getRadio());
+                pelota.rebotarHorizontalmente();
+            } else if (pelota.getX() > barra.getX() + barra.getAncho()) {
+                pelota.setX(barra.getX() + barra.getAncho() + pelota.getRadio());
                 pelota.rebotarHorizontalmente();
             } else {
+                pelota.setY(barra.getY() - pelota.getRadio());
                 pelota.rebotarVerticalmente();
-                // Ajusta la posición de la pelota para evitar que se desplace sobre la barra
-                pelota.setY(barra.getY() - pelota.getRadio()); // Coloca la pelota justo arriba de la barra
+                pelota.setVelocidadY(pelota.getVelocidadY());
             }
 
             sonidoRebote.reproducir();
