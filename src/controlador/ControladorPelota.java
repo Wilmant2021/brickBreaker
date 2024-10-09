@@ -113,10 +113,6 @@ public class ControladorPelota {
     }
 
 
-
-
-
-
     private void verificarDerrota() {
         if (pelota.getY() + pelota.getRadio() > pelota.getAltoPanel()) {
             juego.reducirVida();
