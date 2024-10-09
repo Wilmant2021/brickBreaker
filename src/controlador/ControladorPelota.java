@@ -51,24 +51,67 @@ public class ControladorPelota {
     private void verificarColision() {
         // Colisión con la barra
         if (pelota.getY() + pelota.getRadio() >= barra.getY() &&
-                pelota.getX() >= barra.getX() &&
-                pelota.getX() <= barra.getX() + barra.getAncho()) {
-            pelota.rebotarVerticalmente();
+                pelota.getY() - pelota.getRadio() <= barra.getY() + barra.getAlto() &&
+                pelota.getX() + pelota.getRadio() >= barra.getX() &&
+                pelota.getX() - pelota.getRadio() <= barra.getX() + barra.getAncho()) {
 
+            // Cálculo del punto de impacto en la barra
+            int puntoImpacto = pelota.getX() - barra.getX();
+            int mitadAncho = barra.getAncho() / 2;
+
+            // Ajustar la velocidad en X según la posición de impacto
+            int nuevaVelocidadX = (puntoImpacto - mitadAncho) / 10;
+            pelota.setVelocidadX(nuevaVelocidadX);
+            pelota.rebotarVerticalmente();
             sonidoRebote.reproducir();
         }
 
         // Colisión con los bloques
         for (Bloque bloque : bloques) {
             if (colisionaConBloque(bloque)) {
+                int colisionLado = detectarLadoColision(bloque);
+
+                // Ajuste de la dirección según el lado de colisión
+                if (colisionLado == 1 || colisionLado == 3) {  // Colisión arriba o abajo
+                    pelota.rebotarVerticalmente();
+                } else if (colisionLado == 2) {  // Colisión a la izquierda
+                    pelota.setX(bloque.getX() - pelota.getRadio()); // Ajustar posición
+                    pelota.rebotarHorizontalmente();
+                } else if (colisionLado == 4) {  // Colisión a la derecha
+                    pelota.setX(bloque.getX() + bloque.getAncho() + pelota.getRadio()); // Ajustar posición
+                    pelota.rebotarHorizontalmente();
+                }
+
                 bloques.remove(bloque);
-                pelota.rebotarVerticalmente();
-                juego.incrementarPuntuacion(100);  // Aumentar puntuación al romper un bloque
+                juego.incrementarPuntuacion(100);
                 sonidoRebote.reproducir();
                 break;
             }
         }
     }
+
+
+    // Método para detectar el lado de colisión en el bloque
+    private int detectarLadoColision(Bloque bloque) {
+        int margen = 5;
+
+        boolean colisionArriba = pelota.getY() - pelota.getRadio() <= bloque.getY() + margen &&
+                pelota.getY() + pelota.getRadio() >= bloque.getY();
+        boolean colisionAbajo = pelota.getY() + pelota.getRadio() >= bloque.getY() + bloque.getAlto() - margen &&
+                pelota.getY() - pelota.getRadio() <= bloque.getY() + bloque.getAlto();
+        boolean colisionIzquierda = pelota.getX() - pelota.getRadio() <= bloque.getX() + margen &&
+                pelota.getX() + pelota.getRadio() >= bloque.getX();
+        boolean colisionDerecha = pelota.getX() + pelota.getRadio() >= bloque.getX() + bloque.getAncho() - margen &&
+                pelota.getX() - pelota.getRadio() <= bloque.getX() + bloque.getAncho();
+
+        if (colisionArriba) return 1; // Colisión por arriba
+        if (colisionAbajo) return 3;   // Colisión por abajo
+        if (colisionIzquierda) return 2; // Colisión por la izquierda
+        if (colisionDerecha) return 4; // Colisión por la derecha
+
+        return 0; // No hay colisión
+    }
+
 
     private void verificarDerrota() {
         if (pelota.getY() + pelota.getRadio() > pelota.getAltoPanel()) {

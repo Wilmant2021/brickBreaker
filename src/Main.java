@@ -59,7 +59,7 @@ public class Main {
         // Pantalla de derrota
         JPanel pantallaDerrota = new JPanel();
         pantallaDerrota.setLayout(new BorderLayout());
-        JLabel textoDerrota = new JLabel("Has perdido", JLabel.CENTER);
+        JLabel textoDerrota = new JLabel("GAME OVER ", JLabel.CENTER);
         pantallaDerrota.add(textoDerrota, BorderLayout.CENTER);
 
         // Añadir los paneles al contenedor
@@ -101,26 +101,28 @@ public class Main {
     }
 
     private static void reiniciarJuego(Pelota pelota, Barra barra, ArrayList<modelo.Bloque> bloques, ControladorPelota controlador, PanelPelota panelPelota) {
-        // Ajustar la posición de la pelota para reiniciarla sobre la barra
+        int anchoPanel = 800; // Ancho del panel
+        int altoPanel = 600;  // Alto del panel
+
         int radioPelota = pelota.getRadio();
-        int posicionXPelota = barra.getX() + (barra.getAncho() / 2) - radioPelota;
-        int posicionYPelota = barra.getY() - radioPelota - 5;
+        int posicionXPelota = (anchoPanel / 2) - radioPelota;  // Centrar la pelota en el ancho
+        int posicionYPelota = (altoPanel / 2) - radioPelota;   // Centrar la pelota en el alto
 
         pelota.setX(posicionXPelota);
         pelota.setY(posicionYPelota);
 
         // Opcional: ajustar la velocidad de la pelota si es necesario
-        //pelota.setVelocidadX(5);
-        //pelota.setVelocidadY(5);
+        // pelota.setVelocidadX(5);
+        // pelota.setVelocidadY(5);
 
-        // Reiniciar la posición de la barra si es necesario
         barra.mover(350);
 
         bloques.clear();
-        bloques.addAll(crearBloques(800, 600));
+        bloques.addAll(crearBloques(anchoPanel, altoPanel));
 
         controlador.iniciar();
         panelPelota.actualizarPanel();
     }
+
 
 }
