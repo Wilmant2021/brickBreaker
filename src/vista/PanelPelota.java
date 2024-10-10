@@ -32,6 +32,7 @@ public class PanelPelota extends JPanel {
         URL urlImagenPelota = getClass().getClassLoader().getResource("resources/imagenes/pelota.png");
         if (urlImagenPelota != null) {
             imagenPelota = new ImageIcon(urlImagenPelota).getImage();
+            imagenPelota = imagenPelota.getScaledInstance(pelota.getRadio()  * 2, pelota.getRadio()  * 2, Image.SCALE_SMOOTH);
             anchoImgPelota = imagenPelota.getWidth(null);
             altoImgPelota = imagenPelota.getHeight(null);
         } else {
@@ -72,7 +73,7 @@ public class PanelPelota extends JPanel {
 
         // Dibujar la pelota
         if (imagenPelota != null) {
-            g.drawImage(imagenPelota, pelota.getX(), pelota.getY(), null);
+            g.drawImage(imagenPelota, pelota.getX() - pelota.getRadio(), pelota.getY() - pelota.getRadio(), null);
         }
 
         // Dibujar la barra usando la imagen
