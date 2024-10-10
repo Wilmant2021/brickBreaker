@@ -17,24 +17,35 @@ public class PanelPelota extends JPanel {
     private List<Bloque> bloques;
 
     private Image imagenPelota;
-    private int anchoImg;
-    private int altoImg;
+    private Image imagenBarra;
+    private int anchoImgPelota;
+    private int altoImgPelota;
+    private int anchoImgBarra;
+    private int altoImgBarra;
 
-    public PanelPelota(Pelota pelota, Barra barra,List<Bloque> bloques) {
+    public PanelPelota(Pelota pelota, Barra barra, List<Bloque> bloques) {
         this.pelota = pelota;
         this.barra = barra;
-        this.bloques =  bloques;
+        this.bloques = bloques;
 
-
-        // Cargar la imagen desde el classpath
-        URL urlImagen = getClass().getClassLoader().getResource("resources/imagenes/pelota.png");
-
-        if (urlImagen != null) {
-            imagenPelota = new ImageIcon(urlImagen).getImage();
-            anchoImg = imagenPelota.getWidth(null);
-            altoImg = imagenPelota.getHeight(null);
+        // Cargar la imagen de la pelota
+        URL urlImagenPelota = getClass().getClassLoader().getResource("resources/imagenes/pelota.png");
+        if (urlImagenPelota != null) {
+            imagenPelota = new ImageIcon(urlImagenPelota).getImage();
+            anchoImgPelota = imagenPelota.getWidth(null);
+            altoImgPelota = imagenPelota.getHeight(null);
         } else {
             System.err.println("No se pudo cargar la imagen de la pelota");
+        }
+
+        // Cargar la imagen de la barra
+        URL urlImagenBarra = getClass().getClassLoader().getResource("resources/imagenes/barra1.png");
+        if (urlImagenBarra != null) {
+            imagenBarra = new ImageIcon(urlImagenBarra).getImage();
+            anchoImgBarra = imagenBarra.getWidth(null);
+            altoImgBarra = imagenBarra.getHeight(null);
+        } else {
+            System.err.println("No se pudo cargar la imagen de la barra");
         }
 
         // Añadir un MouseMotionListener para detectar el movimiento del ratón
@@ -60,18 +71,16 @@ public class PanelPelota extends JPanel {
         super.paintComponent(g);
 
         // Dibujar la pelota
-        g.setColor(Color.RED);
-
-        //g.fillOval(pelota.getX() - pelota.getRadio(), pelota.getY() - pelota.getRadio(), pelota.getRadio() * 2, pelota.getRadio() * 2);
         if (imagenPelota != null) {
-            g.drawImage(imagenPelota, pelota.getX(), pelota.getY() , null);
+            g.drawImage(imagenPelota, pelota.getX(), pelota.getY(), null);
         }
 
-        // Dibujar la barra
-        g.setColor(Color.BLUE);
-        g.fillRect(barra.getX(), barra.getY(), barra.getAncho(), barra.getAlto());
+        // Dibujar la barra usando la imagen
+        if (imagenBarra != null) {
+            g.drawImage(imagenBarra, barra.getX(), barra.getY(), null);
+        }
 
-
+        // Dibujar los bloques
         g.setColor(Color.GREEN);
         for (Bloque bloque : bloques) {
             if (!bloque.estaDestruido()) {

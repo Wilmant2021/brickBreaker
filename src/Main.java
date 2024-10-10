@@ -34,7 +34,7 @@ public class Main {
         int vidas = 3;
 
         // Barra
-        Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
+        Barra barra = new Barra(350, alto-70,100, 10, ancho);
 
         // Ajustar la posición inicial de la pelota en relación con la barra
         int radioPelota = 20;

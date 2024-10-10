@@ -3,7 +3,6 @@ package modelo;
 public class Barra {
     private int x, y; // Posición de la barra
     private int ancho, alto; // Dimensiones de la barra
-    private int velocidadY;
     private int anchoPanel; // Ancho del área de juego (para limitar el movimiento)
 
     public Barra(int x, int y, int ancho, int alto, int anchoPanel) {
@@ -13,6 +12,8 @@ public class Barra {
         this.alto = alto;
         this.anchoPanel = anchoPanel;
     }
+
+
 
     // Método para mover la barra a una nueva posición, respetando los límites
     public void mover(int nuevaX) {
@@ -44,7 +45,7 @@ public class Barra {
     }
 
     public int getVelocidadX() {
-        return 10;  // Puedes ajustar esta velocidad según tus preferencias
+        return 10;
     }
 
 }

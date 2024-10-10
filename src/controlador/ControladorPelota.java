@@ -60,7 +60,7 @@ public class ControladorPelota {
             int mitadAncho = barra.getAncho() / 2;
 
             // Ajustar la velocidad en X según la posición de impacto
-            int nuevaVelocidadX = (puntoImpacto - mitadAncho) / 10;
+            int nuevaVelocidadX = (puntoImpacto - mitadAncho) / (barra.getAncho() / 5);
             pelota.setVelocidadX(nuevaVelocidadX);
             pelota.rebotarVerticalmente();
             sonidoRebote.reproducir();
@@ -121,8 +121,10 @@ public class ControladorPelota {
                 cardLayout.show(contenedorPaneles, "Derrota");
             } else {
                 // Reiniciar la posición de la pelota
-                pelota.setX(100);
-                pelota.setY(100);
+                pelota.setX(panelPelota.getWidth() / 2);
+                pelota.setY(panelPelota.getHeight() / 2);
+                pelota.setVelocidadY(Math.abs(pelota.getVelocidadY()));
+                pelota.setVelocidadX(0);
                 barra.mover(350);
             }
         }
