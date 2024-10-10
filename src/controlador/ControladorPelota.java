@@ -72,16 +72,22 @@ public class ControladorPelota {
                 int colisionLado = detectarLadoColision(bloque);
 
                 // Ajuste de la dirección según el lado de colisión
-                if (colisionLado == 1 || colisionLado == 3) {  // Colisión arriba o abajo
-                    pelota.rebotarVerticalmente();
-                } else if (colisionLado == 2) {  // Colisión a la izquierda
-                    pelota.setX(bloque.getX() - pelota.getRadio()); // Ajustar posición
-                    pelota.rebotarHorizontalmente();
-                } else if (colisionLado == 4) {  // Colisión a la derecha
-                    pelota.setX(bloque.getX() + bloque.getAncho() + pelota.getRadio()); // Ajustar posición
-                    pelota.rebotarHorizontalmente();
+                switch (colisionLado) {
+                    case 1: // Colisión arriba
+                    case 3: // Colisión abajo
+                        pelota.rebotarVerticalmente();
+                        break;
+                    case 2: // Colisión a la izquierda
+                        pelota.setX(bloque.getX() - pelota.getRadio()); // Ajustar posición
+                        pelota.rebotarHorizontalmente();
+                        break;
+                    case 4: // Colisión a la derecha
+                        pelota.setX(bloque.getX() + bloque.getAncho() + pelota.getRadio()); // Ajustar posición
+                        pelota.rebotarHorizontalmente();
+                        break;
                 }
 
+                // Asegúrate de que el bloque se elimine después de la colisión
                 bloques.remove(bloque);
                 juego.incrementarPuntuacion(100);
                 sonidoRebote.reproducir();

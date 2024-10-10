@@ -37,7 +37,7 @@ public class Main {
         Barra barra = new Barra(350, alto-70,100, 10, ancho);
 
         // Ajustar la posición inicial de la pelota en relación con la barra
-        int radioPelota = 20;
+        int radioPelota = 10;
         int posicionXPelota = barra.getX() + (barra.getAncho() / 2) - radioPelota;  // Centrar la pelota en la barra
         int posicionYPelota = barra.getY() - radioPelota - 5;  // Colocar la pelota justo encima de la barra
 
