@@ -20,6 +20,7 @@ public class Bloque {
         }
     }
 
+    // Método que verifica si el bloque está destruido
     public boolean estaDestruido() {
         return resistencia <= 0;
     }
@@ -39,5 +40,9 @@ public class Bloque {
 
     public int getAlto() {
         return alto;
+    }
+
+    public int getResistencia() {
+        return resistencia; // Método para obtener la resistencia actual
     }
 }
