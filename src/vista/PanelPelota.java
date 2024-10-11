@@ -39,7 +39,6 @@ public class PanelPelota extends JPanel {
             imagenNivel = new ImageIcon(urlFondo).getImage();
             anchoImgNivel = imagenNivel.getWidth(null);
             altoImgNivel = imagenNivel.getHeight(null);
-
         } else {
             System.err.println("No se pudo cargar la imagen del fondo");
         }
@@ -102,11 +101,27 @@ public class PanelPelota extends JPanel {
             g.drawImage(imagenBarra, barra.getX(), barra.getY(), null);
         }
 
-        // Dibujar los bloques
-        g.setColor(Color.GREEN);
+        // Dibujar los bloques con sus imágenes correspondientes
         for (Bloque bloque : bloques) {
             if (!bloque.estaDestruido()) {
-                g.fillRect(bloque.getX(), bloque.getY(), bloque.getAncho(), bloque.getAlto());
+                // Obtener la imagen del bloque según su id y resistencia
+                String rutaImagenBloque = bloque.getImagen(bloque.getIdBloque(), bloque.getResistencia());
+                System.out.println("Cargando bloque con id: " + bloque.getIdBloque() + " y resistencia: " + bloque.getResistencia());
+                System.out.println("Ruta de imagen: " + rutaImagenBloque);
+
+                URL urlImagenBloque = getClass().getClassLoader().getResource(rutaImagenBloque);
+
+                if (urlImagenBloque != null) {
+                    // Cargar la imagen del bloque
+                    Image imagenBloque = new ImageIcon(urlImagenBloque).getImage();
+                    System.out.println("Imagen cargada correctamente para el bloque");
+                    // Prueba dibujando la imagen sin escalado
+                    g.drawImage(imagenBloque, bloque.getX(), bloque.getY(), bloque.getAncho(), bloque.getAlto(), null);
+                } else {
+                    System.err.println("No se pudo cargar la imagen para el bloque con id " + bloque.getIdBloque());
+                }
+            } else {
+                System.out.println("El bloque con id " + bloque.getIdBloque() + " está destruido y no se dibujará.");
             }
         }
     }

@@ -72,7 +72,7 @@ public class Nivel {
 
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                bloques.add(new modelo.Bloque(j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, 1));
+                bloques.add(new modelo.Bloque(1,j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, 1));
             }
         }
         return bloques;
@@ -95,7 +95,7 @@ public class Nivel {
                     resistencia = 3;  // Bloques de los bordes son más fuertes
                 }
 
-                bloques.add(new modelo.Bloque(j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, resistencia));
+                bloques.add(new modelo.Bloque(resistencia, j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, resistencia));
             }
         }
         return bloques;
@@ -118,7 +118,7 @@ public class Nivel {
                     resistencia = 3;  // Bloques de los bordes son más fuertes
                 }
 
-                bloques.add(new modelo.Bloque(j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, resistencia));
+                bloques.add(new modelo.Bloque(resistencia, j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, resistencia));
             }
         }
         return bloques;

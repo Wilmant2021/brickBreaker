@@ -30,7 +30,7 @@ public class Main {
         int vidas = 3;
 
         //Crear niveles
-        Nivel nivel = new Nivel(1, 0, vidas, 6);
+        Nivel nivel = new Nivel(2, 0, vidas, 6);
 
         // Barra
         Barra barra = new Barra(350, alto-70,100, 10, ancho);
