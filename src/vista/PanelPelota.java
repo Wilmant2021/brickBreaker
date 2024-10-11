@@ -2,6 +2,7 @@ package vista;
 
 import modelo.Barra;
 import modelo.Bloque;
+import modelo.Nivel;
 import modelo.Pelota;
 
 import javax.swing.*;
@@ -14,19 +15,34 @@ import java.util.List;
 public class PanelPelota extends JPanel {
     private Pelota pelota;
     private Barra barra;
+    private Nivel nivel;
     private List<Bloque> bloques;
-
     private Image imagenPelota;
     private Image imagenBarra;
+    private Image imagenNivel;
     private int anchoImgPelota;
     private int altoImgPelota;
     private int anchoImgBarra;
     private int altoImgBarra;
+    private int anchoImgNivel;
+    private int altoImgNivel;
 
-    public PanelPelota(Pelota pelota, Barra barra, List<Bloque> bloques) {
+    public PanelPelota(Pelota pelota, Barra barra, List<Bloque> bloques, Nivel nivel) {
         this.pelota = pelota;
         this.barra = barra;
+        this.nivel = nivel;
         this.bloques = bloques;
+
+        // Cargar la imagen desde el classpath
+        URL urlFondo = getClass().getClassLoader().getResource(nivel.getFondo());
+        if (urlFondo != null) {
+            imagenNivel = new ImageIcon(urlFondo).getImage();
+            anchoImgNivel = imagenNivel.getWidth(null);
+            altoImgNivel = imagenNivel.getHeight(null);
+
+        } else {
+            System.err.println("No se pudo cargar la imagen del fondo");
+        }
 
         // Cargar la imagen de la pelota
         URL urlImagenPelota = getClass().getClassLoader().getResource("resources/imagenes/pelota.png");
@@ -70,6 +86,11 @@ public class PanelPelota extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        //Cargar imagen
+        if(imagenNivel != null) {
+            g.drawImage(imagenNivel, 0, 0, getWidth(), getHeight(), null);
+        }
 
         // Dibujar la pelota
         if (imagenPelota != null) {

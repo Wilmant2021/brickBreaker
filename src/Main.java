@@ -1,12 +1,10 @@
 import controlador.ControladorPelota;
-import modelo.Barra;
-import modelo.Juego;
-import modelo.Pelota;
+import modelo.*;
 import vista.PanelPelota;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,12 +24,13 @@ public class Main {
         JLabel etiquetaPuntaje = new JLabel("Puntaje: 0");
         JLabel etiquetaVidas = new JLabel("Vidas: " + Juego.getVidas());
 
-
-
         // Crear el juego
         int ancho = 800;
         int alto = 600;
         int vidas = 3;
+
+        //Crear niveles
+        Nivel nivel = new Nivel(3, 0, vidas, 6);
 
         // Barra
         Barra barra = new Barra(350, alto-70,100, 10, ancho);
@@ -42,11 +41,11 @@ public class Main {
         int posicionYPelota = barra.getY() - radioPelota - 5;  // Colocar la pelota justo encima de la barra
 
         Pelota pelota = new Pelota(posicionXPelota, posicionYPelota, radioPelota, 5, 5, ancho, alto);
-        ArrayList<modelo.Bloque> bloques = crearBloques(ancho, alto);
+        List<Bloque> bloques = nivel.getBloques();
         Juego juego = new Juego(vidas, bloques);
 
-        PanelPelota panelPelota = new PanelPelota(pelota, barra, bloques);
-        ControladorPelota controlador = new ControladorPelota(pelota, barra, bloques, panelPelota, juego, cardLayout, contenedorPaneles);
+        PanelPelota panelPelota = new PanelPelota(pelota, barra, bloques, nivel);
+        ControladorPelota controlador = new ControladorPelota(pelota, barra, panelPelota, juego, cardLayout, contenedorPaneles, nivel);
 
         // Pantalla de victoria
         JPanel pantallaVictoria = new JPanel();
@@ -79,28 +78,12 @@ public class Main {
 
         // Acción al hacer clic en "Reiniciar"
         botonReiniciar.addActionListener(e -> {
-            reiniciarJuego(pelota, barra, bloques, controlador, panelPelota);
+            reiniciarJuego(pelota, barra, bloques, controlador, panelPelota, nivel);
             cardLayout.show(contenedorPaneles, "Juego");
         });
     }
 
-    private static ArrayList<modelo.Bloque> crearBloques(int ancho, int alto) {
-        ArrayList<modelo.Bloque> bloques = new ArrayList<>();
-        int fila = 5;
-        int columna = 10;
-        int anchoBloque = ancho / columna;
-        int altoBloque = 30;
-
-        for (int i = 0; i < fila; i++) {
-            for (int j = 0; j < columna; j++) {
-                bloques.add(new modelo.Bloque(j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, 1));
-            }
-        }
-
-        return bloques;
-    }
-
-    private static void reiniciarJuego(Pelota pelota, Barra barra, ArrayList<modelo.Bloque> bloques, ControladorPelota controlador, PanelPelota panelPelota) {
+    private static void reiniciarJuego(Pelota pelota, Barra barra, List<Bloque> bloques, ControladorPelota controlador, PanelPelota panelPelota, Nivel nivel) {
         int anchoPanel = 800; // Ancho del panel
         int altoPanel = 600;  // Alto del panel
 
@@ -118,11 +101,9 @@ public class Main {
         barra.mover(350);
 
         bloques.clear();
-        bloques.addAll(crearBloques(anchoPanel, altoPanel));
+        bloques.addAll(nivel.getBloques());
 
         controlador.iniciar();
         panelPelota.actualizarPanel();
     }
-
-
 }

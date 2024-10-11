@@ -1,9 +1,6 @@
 package controlador;
 
-import modelo.Barra;
-import modelo.Juego;
-import modelo.Pelota;
-import modelo.Bloque;
+import modelo.*;
 import utils.Sonido;
 import vista.PanelPelota;
 
@@ -16,6 +13,7 @@ import java.util.List;
 public class ControladorPelota {
     private Pelota pelota;
     private Barra barra;
+    private Nivel nivel;
     private List<Bloque> bloques;
     private PanelPelota panelPelota;
     private Timer temporizador;
@@ -25,15 +23,16 @@ public class ControladorPelota {
     private CardLayout cardLayout;
     private JPanel contenedorPaneles;
 
-    public ControladorPelota(Pelota pelota, Barra barra, List<Bloque> bloques, PanelPelota panelPelota, Juego juego, CardLayout cardLayout, JPanel contenedorPaneles) {
+    public ControladorPelota(Pelota pelota, Barra barra, PanelPelota panelPelota, Juego juego, CardLayout cardLayout, JPanel contenedorPaneles, Nivel nivel) {
         this.pelota = pelota;
         this.barra = barra;
-        this.bloques = bloques;
+        this.nivel = nivel;
         this.panelPelota = panelPelota;
         this.juego = juego;
         this.cardLayout = cardLayout;
+        bloques = nivel.getBloques();
         this.contenedorPaneles = contenedorPaneles;
-        sonidoPartida = new Sonido("resources/sonidos/level1.wav");
+        sonidoPartida = new Sonido(nivel.getMusicaFondo());
         sonidoRebote = new Sonido("resources/sonidos/rebotar.wav");
 
         temporizador = new Timer(16, new ActionListener() {
