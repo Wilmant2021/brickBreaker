@@ -66,7 +66,8 @@ public class ControladorPelota {
         }
 
         // Colisión con los bloques
-        for (Bloque bloque : bloques) {
+        for (int i = 0; i < bloques.size(); i++) {
+            Bloque bloque = bloques.get(i);
             if (colisionaConBloque(bloque)) {
                 int colisionLado = detectarLadoColision(bloque);
 
@@ -86,15 +87,20 @@ public class ControladorPelota {
                         break;
                 }
 
-                // Asegúrate de que el bloque se elimine después de la colisión
-                bloques.remove(bloque);
-                juego.incrementarPuntuacion(100);
+                // Reducir resistencia del bloque
+                bloque.reducirResistencia();
+
+                // Verificar si el bloque está destruido
+                if (bloque.estaDestruido()) {
+                    bloques.remove(i); // Eliminar bloque destruido
+                    juego.incrementarPuntuacion(100);
+                }
+
                 sonidoRebote.reproducir();
-                break;
+                break; // Salir del bucle una vez que se haya procesado la colisión
             }
         }
     }
-
 
     // Método para detectar el lado de colisión en el bloque
     private int detectarLadoColision(Bloque bloque) {
@@ -116,7 +122,6 @@ public class ControladorPelota {
 
         return 0; // No hay colisión
     }
-
 
     private void verificarDerrota() {
         if (pelota.getY() + pelota.getRadio() > pelota.getAltoPanel()) {
