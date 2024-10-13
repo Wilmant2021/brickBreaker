@@ -129,4 +129,8 @@ public class PanelPelota extends JPanel {
     public void actualizarPanel() {
         repaint();
     }
+
+
+
+
 }

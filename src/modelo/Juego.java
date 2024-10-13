@@ -33,7 +33,7 @@ public class Juego {
 
     // Métodos getter
     public static int getVidas() {
-        return 0;
+        return 3;
     }
 
     public int getPuntuacion() {
