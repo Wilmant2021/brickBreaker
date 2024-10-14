@@ -72,8 +72,8 @@ public class Nivel {
 
     private List<Bloque> crearBloquesNivel1() {
         ArrayList<modelo.Bloque> bloques = new ArrayList<>();
-        int fila = 1;
-        int columna = 1;
+        int fila = 4;
+        int columna = 10;
         int anchoBloque = ancho / columna;
         int altoBloque = 30;
 
@@ -87,8 +87,8 @@ public class Nivel {
 
     private ArrayList<modelo.Bloque> crearBloquesNivel2() {
         ArrayList<modelo.Bloque> bloques = new ArrayList<>();
-        int fila = 1;  // Más filas que el nivel 1
-        int columna = 1;  // Misma cantidad de columnas
+        int fila = 5;  // Más filas que el nivel 1
+        int columna = 10;  // Misma cantidad de columnas
         int anchoBloque = ancho / columna;
         int altoBloque = 30;
 
