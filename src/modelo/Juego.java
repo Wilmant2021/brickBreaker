@@ -5,11 +5,13 @@ import java.util.List;
 public class Juego {
     private int vidas;
     private int puntuacion;
-    private List<Bloque> bloques;
+    private List<Nivel> niveles;
+    private int nivelActual;
 
-    public Juego(int vidas, List<Bloque> bloques) {
+    public Juego(int vidas, List<Nivel> niveles) {
         this.vidas = vidas;
-        this.bloques = bloques;
+        this.niveles = niveles;
+        this.nivelActual = 0;
         this.puntuacion = 0;
     }
 
@@ -27,16 +29,36 @@ public class Juego {
         return vidas <= 0;
     }
 
-    public boolean nivelCompletado() {
-        return bloques.stream().allMatch(Bloque::estaDestruido);
+    // Métodos getter y setter
+    public int getVidas() {
+        return vidas;
     }
 
-    // Métodos getter
-    public static int getVidas() {
-        return 3;
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public int getPuntuacion() {
         return puntuacion;
     }
+
+    public Nivel getNivelActual() {
+        if (nivelActual < niveles.size()) {
+            return niveles.get(nivelActual);
+        }
+        return null;
+    }
+
+    public List<Nivel> getNiveles() {
+        return niveles;
+    }
+
+    public void reiniciarVidas(int nuevasVidas) {
+        this.vidas = nuevasVidas;
+    }
+
 }

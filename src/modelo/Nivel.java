@@ -30,14 +30,14 @@ public class Nivel {
             "resources/sonidos/fondo/level3.wav"
     };
 
-    public Nivel(int indiceNivel, int puntuacionInicial, int vidadIniciales, int velocidadPelota) {
+    public Nivel(int indiceNivel, int puntuacionInicial, int vidasIniciales, int velocidadPelota) {
         this.indiceNivel = indiceNivel;
         this.puntuacion = puntuacionInicial;
-        this.vidas = vidadIniciales;
+        this.vidas = vidasIniciales;
         this.velocidadPelota = velocidadPelota;
         this.bloques = new ArrayList<>();
 
-        URL urlFondo = getClass().getClassLoader().getResource(imagenesFondo[indiceNivel-1]);
+        URL urlFondo = getClass().getClassLoader().getResource(imagenesFondo[indiceNivel - 1]);
 
         if (urlFondo != null) {
             fondo = new ImageIcon(urlFondo).getImage();
@@ -50,29 +50,36 @@ public class Nivel {
         cargarNivel();
     }
 
-    public void cargarNivel(){
-        if(indiceNivel == 1){
-            velocidadPelota = 6;
+    public void cargarNivel() {
+        if (indiceNivel == 1) {
+            velocidadPelota = 7;
             bloques = crearBloquesNivel1();
-        }else if(indiceNivel == 2){
+        } else if (indiceNivel == 2) {
             velocidadPelota = 8;
             bloques = crearBloquesNivel2();
-        }else if(indiceNivel == 3){
-            velocidadPelota = 10;
+        } else if (indiceNivel == 3) {
+            velocidadPelota = 9;
             bloques = crearBloquesNivel3();
         }
     }
 
-    private List<Bloque> crearBloquesNivel1(){
+    // Método para reiniciar el nivel
+    public void reiniciarNivel() {
+        this.puntuacion = 0; // O el valor que desees
+        this.vidas = 3; // Restablece las vidas a un valor inicial
+        cargarNivel(); // Vuelve a cargar los bloques
+    }
+
+    private List<Bloque> crearBloquesNivel1() {
         ArrayList<modelo.Bloque> bloques = new ArrayList<>();
-        int fila = 5;
-        int columna = 10;
+        int fila = 1;
+        int columna = 1;
         int anchoBloque = ancho / columna;
         int altoBloque = 30;
 
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                bloques.add(new modelo.Bloque(1,j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, 1));
+                bloques.add(new modelo.Bloque(1, j * anchoBloque, i * altoBloque, anchoBloque - 5, altoBloque - 5, 1));
             }
         }
         return bloques;
@@ -80,17 +87,17 @@ public class Nivel {
 
     private ArrayList<modelo.Bloque> crearBloquesNivel2() {
         ArrayList<modelo.Bloque> bloques = new ArrayList<>();
-        int fila = 6;  // Más filas que el nivel 1
-        int columna = 10;  // Misma cantidad de columnas
+        int fila = 1;  // Más filas que el nivel 1
+        int columna = 1;  // Misma cantidad de columnas
         int anchoBloque = ancho / columna;
         int altoBloque = 30;
 
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                // Crear resistencia variable, por ejemplo: bloques más arriba son más débiles
+                // Crear resistencia variable
                 int resistencia = (i % 2 == 0) ? 1 : 2;  // Bloques alternos con resistencia 1 y 2
 
-                // También puedes hacer que bloques en ciertas posiciones sean indestructibles o especiales
+                // Bloques de los bordes son más fuertes
                 if (i == 0 || i == fila - 1) {
                     resistencia = 3;  // Bloques de los bordes son más fuertes
                 }
@@ -110,10 +117,10 @@ public class Nivel {
 
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                // Crear resistencia variable, por ejemplo: bloques más arriba son más débiles
+                // Crear resistencia variable
                 int resistencia = (i % 2 == 0) ? 1 : 2;  // Bloques alternos con resistencia 1 y 2
 
-                // También puedes hacer que bloques en ciertas posiciones sean indestructibles o especiales
+                // Bloques de los bordes son más fuertes
                 if (i == 0 || i == fila - 1) {
                     resistencia = 3;  // Bloques de los bordes son más fuertes
                 }
@@ -124,51 +131,57 @@ public class Nivel {
         return bloques;
     }
 
-    public Boolean nivelCompletado(){
+    public Boolean nivelCompletado() {
         return bloques.isEmpty();
     }
 
-    //Metodos getter
+    // Métodos getter
     public List<Bloque> getBloques() {
         return bloques;
     }
 
     public String getFondo() {
-        return imagenesFondo[indiceNivel-1];
+        return imagenesFondo[indiceNivel - 1];
     }
 
-    public String getMusicaFondo(){
-        return musicaFondo[indiceNivel-1];
+    public String getMusicaFondo() {
+        return musicaFondo[indiceNivel - 1];
     }
 
     public Sonido getSonido() {
         return sonido;
     }
 
-    public int getPuntuacion(){
+    public int getPuntuacion() {
         return puntuacion;
     }
-    public int getVidas(){
+
+    public int getVidas() {
         return vidas;
     }
-    public int getVelocidadPelota(){
+
+    public int getVelocidadPelota() {
         return velocidadPelota;
     }
-    public int getIndiceNivel(){
+
+    public int getIndiceNivel() {
         return indiceNivel;
     }
 
-    //Metodos setter
-    public void setPuntuacion(int puntuacion){
-        this.puntuacion+=puntuacion;
+    // Métodos setter
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion += puntuacion;
     }
-    public void setVelocidadPelota(int velocidadPelota){
+
+    public void setVelocidadPelota(int velocidadPelota) {
         this.velocidadPelota = velocidadPelota;
     }
-    public void setVidas(){
-        this.vidas-=1;
+
+    public void setVidas() {
+        this.vidas -= 1;
     }
-    public void setIndiceNivel(int indiceNivel){
+
+    public void setIndiceNivel(int indiceNivel) {
         this.indiceNivel = indiceNivel;
     }
 }
