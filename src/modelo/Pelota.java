@@ -27,17 +27,6 @@ public class Pelota {
         return velocidadY;
     }
 
-    public void setAnchoPanel(int anchoPanel) {
-        this.anchoPanel = anchoPanel;
-    }
-
-    public void setRadio(int radio) {
-        this.radio = radio;
-    }
-
-    public void setAltoPanel(int altoPanel) {
-        this.altoPanel = altoPanel;
-    }
 
     public void mover() {
         x += velocidadX;
@@ -76,10 +65,6 @@ public class Pelota {
         return radio;
     }
 
-    public int getAnchoPanel(){
-        return anchoPanel;
-    }
-
     public int getAltoPanel(){
         return altoPanel;
     }
@@ -98,6 +83,10 @@ public class Pelota {
 
     public void setVelocidadY(int velocidadY) {
         this.velocidadY = velocidadY;
+    }
+    public void setVelocidad(int velocidad) {
+        this.velocidadX = velocidad; // Cambia la velocidad horizontal
+        this.velocidadY = velocidad; // Cambia la velocidad vertical (puedes modificar esto si necesitas diferentes velocidades)
     }
 
 
